@@ -4,18 +4,12 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Unity WebGL Player | RenderHead</title>
-    <link rel="stylesheet" href="TemplateData/style.css">
-    <link rel="shortcut icon" href="TemplateData/favicon.ico" />
-    <script src="TemplateData/UnityProgress.js"></script>
+    <style>
+    /* a style sheet needs to be present for cursor hiding and custom cursors to work. */
+    </style>
   </head>
-  <body class="template">
-    <div class="template-wrap clear">
-      <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" height="600px" width="960px"></canvas>
-      <br>
-      <div class="logo"></div>
-      <div class="fullscreen"><img src="TemplateData/fullscreen.png" width="38" height="38" alt="Fullscreen" title="Fullscreen" onclick="SetFullscreen(1);" /></div>
-      <div class="title">RenderHead</div>
-    </div>
+  <body>
+    <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" height="600px" width="960px"></canvas>
     <script type='text/javascript'>
   var Module = {
     TOTAL_MEMORY: 268435456,
@@ -30,6 +24,22 @@
   };
 </script>
 <script src="Release/UnityLoader.js"></script>
+<script>
+function SendThemMessages()
+{
+  // https://www.dropbox.com/sh/zmch6hfzc97rvbb/AAA3dfsDDX4IisxFmS9kJaTLa/focal_length_800_v3_with_seg/2339510439_1_texture.png?dl=0
+  SendMessage("Main Camera","SetMeshUrl", "https://dl.dropboxusercontent.com/sh/zmch6hfzc97rvbb/AADHRfQSf0yXgpVDwrXkz7hKa/focal_length_800_v3_with_seg/2339510439_1_neutral_adjust.obj?dl=1");
+  SendMessage("Main Camera","SetTextureUrl", "https://dl.dropboxusercontent.com/sh/zmch6hfzc97rvbb/AAA3dfsDDX4IisxFmS9kJaTLa/focal_length_800_v3_with_seg/2339510439_1_texture.png?dl=1");
+}
 
+function Apply()
+{
+  SendMessage("Main Camera","ExternalApplyAvatar");
+}
+
+</script>
+
+<input id="clickMe" type="button" value="clickme" onclick="SendThemMessages();" />
+<input id="clickMe" type="button" value="Apply" onclick="Apply();" />
   </body>
 </html>
