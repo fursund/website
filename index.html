@@ -25,21 +25,52 @@
 </script>
 <script src="Release/UnityLoader.js"></script>
 <script>
+
+function RemoveBaseUrl(url) {
+    /*
+     * Replace base URL in given string, if it exists, and return the result.
+     *
+     * e.g. "http://localhost:8000/api/v1/blah/" becomes "/api/v1/blah/"
+     *      "/api/v1/blah/" stays "/api/v1/blah/"
+     */
+    var baseUrlPattern = /^https?:\/\/[a-z\:0-9.]+/;
+    var result = "";
+ 
+    var match = baseUrlPattern.exec(url);
+    if (match != null) {
+        result = match[0];
+    }
+ 
+    if (result.length > 0) {
+        url = url.replace(result, "");
+    }
+ 
+    return url;
+}
+
 function SendThemMessages()
 {
   // https://www.dropbox.com/sh/zmch6hfzc97rvbb/AAA3dfsDDX4IisxFmS9kJaTLa/focal_length_800_v3_with_seg/2339510439_1_texture.png?dl=0
-  SendMessage("Main Camera","SetMeshUrl", "https://dl.dropboxusercontent.com/sh/zmch6hfzc97rvbb/AADHRfQSf0yXgpVDwrXkz7hKa/focal_length_800_v3_with_seg/2339510439_1_neutral_adjust.obj?dl=1");
-  SendMessage("Main Camera","SetTextureUrl", "https://dl.dropboxusercontent.com/sh/zmch6hfzc97rvbb/AAA3dfsDDX4IisxFmS9kJaTLa/focal_length_800_v3_with_seg/2339510439_1_texture.png?dl=1");
+
+  var mtexturepath = RemoveBaseUrl(document.getElementById('textureUrl').value);
+  var mmeshpath = RemoveBaseUrl(document.getElementById('meshUrl').value);
+  
+  SendMessage("Main Camera","SetTextureUrl", "https://dl.dropboxusercontent.com" + mtexturepath);
+  SendMessage("Main Camera","SetMeshUrl", "https://dl.dropboxusercontent.com" + mmeshpath);
 }
 
 function Apply()
 {
+  SendThemMessages();
   SendMessage("Main Camera","ExternalApplyAvatar");
 }
 
 </script>
-
-<!--<input id="clickMe" type="button" value="clickme" onclick="SendThemMessages();" />-->
+<br>
+Mesh url: <input name="Mesh Url" type="text" id="meshUrl" value="https://www.dropbox.com/sh/zmch6hfzc97rvbb/AABcZT_D95G_8owHeax-IvUKa/focal_length_800_v3_with_seg/haomam_neutral_adjust.obj?dl=0"/>
+<br>
+Texture url: <input name="Texture Url" type="text" id="textureUrl" value="https://www.dropbox.com/sh/zmch6hfzc97rvbb/AABqopgjSv0tn7xDHpBzNH43a/focal_length_800_v3_with_seg/haomam_texture.png?dl=0"/>
+<br>
 <input id="clickMe" type="button" value="Apply" onclick="Apply();" />
   </body>
 </html>
